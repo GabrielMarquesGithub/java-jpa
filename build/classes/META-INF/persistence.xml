@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<!-- Cada persistence-unit representa um Schema a ser trabalhado -->
+	<persistence-unit name="via_java">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<!-- Classe que serão representadas por entidades -->
+		<class>modelo.basico.Usuario</class>
+		<class>modelo.basico.Produto</class>
+
+		<properties>
+			<!-- properties já padronizadas pelo JDBC -->
+			<property name="javax.persistence.jdbc.driver"
+				value="com.mysql.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:mysql://localhost/via_java"/>
+			<property name="javax.persistence.jdbc.user"
+				value="root"/>
+			<property name="javax.persistence.jdbc.password"
+				value="####"/>
+
+			<!-- properties relacionadas ao Hibernate -->
+			<!-- definindo a Versão do SQL a ser utilizada pela ORM neste caso MySQL57 -->
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.MySQL57Dialect"/>
+			<!-- configurando se deve ser exibido o SQL gerado pela ORM ao executar -->
+			<property name="hibernate.show_sql" value="true"/>
+			<!-- configurando se o SQL exibido deve está formatado -->
+			<property name="hibernate.format_sql" value="true"/>
+			<!-- configurando se a ORM devera fazer update quando realizar alguma ação -->
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+		</properties>
+	</persistence-unit>
+</persistence>
