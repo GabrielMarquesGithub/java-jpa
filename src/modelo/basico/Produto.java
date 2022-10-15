@@ -54,7 +54,7 @@ public class Produto implements Entidade {
 		return valor;
 	}
 
-	public void setValor(Double price) {
+	public void setValor(Double valor) {
 		this.valor = valor;
 	}
 

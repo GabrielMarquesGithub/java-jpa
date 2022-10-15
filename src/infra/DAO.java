@@ -7,10 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import modelo.basico.Entidade;
-
 //limitando o generic DAO só pode receber um tipo de estende de Entidade
-public class DAO<E extends Entidade> {
+//public class DAO<E extends Entidade>
+public class DAO<E> {
 	// DAO inicializada as classes
 	private static EntityManagerFactory emf;
 	private EntityManager em;
@@ -32,7 +31,7 @@ public class DAO<E extends Entidade> {
 	}
 
 	// Recebe uma classe referenciada no DB
-	DAO(Class<E> classe) {
+	public DAO(Class<E> classe) {
 		this.classe = classe;
 		em = emf.createEntityManager();
 	}
@@ -60,9 +59,13 @@ public class DAO<E extends Entidade> {
 		return this.abrirT().incluir(entidade).fecharT();
 	}
 
+	public E obeterPorId(Long id) {
+		return em.find(classe, id);
+	}
+
 	// sobrecarga de método
 	public List<E> obeterTodos() {
-		return this.obeterTodos(10, 0);
+		return this.obeterTodos(10, 1);
 	}
 
 	public List<E> obeterTodos(int limit, int offset) {
@@ -70,12 +73,21 @@ public class DAO<E extends Entidade> {
 			throw new UnsupportedOperationException("Classe nula.");
 		}
 		// jpql dinâmico
-		String jpql = "select u from" + classe.getName() + " u";
+		String jpql = "select e from " + classe.getName() + " e";
 		TypedQuery<E> query = em.createQuery(jpql, this.classe);
 
 		// setFirstResult define qual será o primeiro item a ser retornado pulando os
 		// anteriores
 		return query.setMaxResults(limit).setFirstResult(offset).getResultList();
+	}
+
+	// consulta usando Named Query
+	public List<E> consultas(String namedQuery, Object... params) {
+		TypedQuery<E> query = em.createNamedQuery(namedQuery, classe);
+		for (int i = 0; i < params.length; i += 2) {
+			query.setParameter(params[i].toString(), params[i + 1]);
+		}
+		return query.getResultList();
 	}
 
 	public void close() {

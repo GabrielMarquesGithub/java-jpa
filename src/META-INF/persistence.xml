@@ -6,9 +6,19 @@
 	<!-- Cada persistence-unit representa um Schema a ser trabalhado -->
 	<persistence-unit name="via_java">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		
+		<mapping-file>META-INF/consultas.xml</mapping-file>
+		
 		<!-- Classe que serão representadas por entidades -->
 		<class>modelo.basico.Usuario</class>
 		<class>modelo.basico.Produto</class>
+		<class>modelo.umpraum.Assento</class>
+		<class>modelo.umpraum.Cliente</class>
+		<class>modelo.umpramuitos.Pedido</class>
+		<class>modelo.umpramuitos.ItemPedido</class>
+		<class>modelo.herancaJPA.PessoaH</class>
+		<class>modelo.herancaJPA.ClienteH</class>
+		<class>modelo.herancaJPA.UsuarioH</class>
 
 		<properties>
 			<!-- properties já padronizadas pelo JDBC -->
